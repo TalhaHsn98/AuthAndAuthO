@@ -1,14 +1,27 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp_UnderTheHood.DTO;
 
 namespace WebApp_UnderTheHood.Pages
 {
     [Authorize(Policy = "HRManagerOnly")]
     public class HRManagerModel : PageModel
     {
-        public void OnGet()
+        private readonly IHttpClientFactory httpClientFactory;
+
+        [BindProperty]
+        public List<WeatherForeCastDTO>? weatherForecastItems { get; set; }
+
+        public HRManagerModel(IHttpClientFactory httpClientFactory)
         {
+            this.httpClientFactory = httpClientFactory;
+        }
+
+        public async Task OnGetAsync()
+        {
+            var client = httpClientFactory.CreateClient("OurWebApi");
+            weatherForecastItems = await client.GetFromJsonAsync<List<WeatherForeCastDTO>>("WeatherForecast");
         }
     }
 }
