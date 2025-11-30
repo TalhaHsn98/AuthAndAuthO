@@ -44,7 +44,8 @@ namespace WebApp.Pages.Account
                          new
                          {
                             this.Credential.RememberMe
-                         });
+                         }
+                    );
 
                 }
                 if (result.IsLockedOut)
