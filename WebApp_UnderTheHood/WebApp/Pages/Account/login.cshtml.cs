@@ -40,12 +40,12 @@ namespace WebApp.Pages.Account
             {
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("/Account/LoginTwoFactor",
-                        new
-                        {
-                            Email = this.Credential.Email,
-                            RememberMe = this.Credential.RememberMe
-                        });
+                    return RedirectToPage("/Account/LoginTwoFactorWithAuthenticator",
+                         new
+                         {
+                            this.Credential.RememberMe
+                         });
+
                 }
                 if (result.IsLockedOut)
                 {
